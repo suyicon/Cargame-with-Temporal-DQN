@@ -22,9 +22,6 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Racing Game!")
 
 FPS = 30
-# PATH = [(175, 119), (110, 70), (56, 133), (70, 481), (318, 731), (404, 680), (418, 521), (507, 475), (600, 551), (613, 715), (736, 713),
-#         (734, 399), (611, 357), (409, 343), (433, 257), (697, 258), (738, 123), (581, 71), (303, 78), (275, 377), (176, 388), (178, 260)]
-
 PATH = [(501, 314), (498, 221), (462, 142), (403, 93), (325, 73), (247, 96), (184, 152), (149, 237), (148, 353),
         (150, 459), (148, 565),
         (148, 672), (180, 771), (238, 828), (324, 853), (409, 832), (470, 776), (501, 678), (503, 568), (500, 516),
@@ -99,11 +96,6 @@ class ComputerCar(AbstractCar):
         self.path = path
         self.current_point = 0
         self.car_rect = (0, 0, 0, 0)
-        self.N_rect = (0, 0, 0, 0)
-        self.S_rect = (0, 0, 0, 0)
-        self.E_rect = (0, 0, 0, 0)
-        self.W_rect = (0, 0, 0, 0)
-        self.to_target = False
         self.is_finished = False
         self.is_collide = False
         self.cumulated_rewards = 0
@@ -311,11 +303,6 @@ class ComputerCar(AbstractCar):
 
     def draw_car_rect(self, win):
         pygame.draw.rect(win, (230, 230, 230), self.car_rect, 1)
-        # sensor rects
-        pygame.draw.rect(win, (0, 0, 255), self.N_rect, 1)
-        pygame.draw.rect(win, (0, 0, 255), self.S_rect, 1)
-        pygame.draw.rect(win, (0, 0, 255), self.E_rect, 1)
-        pygame.draw.rect(win, (0, 0, 255), self.W_rect, 1)
 
     def draw(self, win):
         super().draw(win)
