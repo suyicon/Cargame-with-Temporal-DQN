@@ -9,34 +9,6 @@ MEMORY_WARMUP_SIZE = 500  # replay_memory 里需要预存一些经验数据，�
 BATCH_SIZE = 32  # 每次给agent learn的数据数量，从replay memory随机里sample一批数据出来
 LEARNING_RATE = 0.001  # 学习率
 GAMMA = 0.95  # reward 的衰减因子，一般取 0.9 到 0.999 不等
-
-
-def run_train_episode(agent, env, rpm):
-    total_reward = 0
-    obs = env.reset()[0]
-    step = 0
-    while True:
-        #先采样数据预热rpm
-        step += 1
-        action = agent.sample(obs)  # 采样动作，所有动作都有概率被尝试到
-        next_obs, reward, done= env.step(action)
-        rpm.append((obs, action, reward, next_obs, done))
-
-        # train model
-        if (len(rpm) > MEMORY_WARMUP_SIZE) and (step % LEARN_FREQ == 0):
-            # s,a,r,s',done
-            (batch_obs, batch_action, batch_reward, batch_next_obs,
-             batch_done) = rpm.sample(BATCH_SIZE)
-            train_loss = agent.learn(batch_obs, batch_action, batch_reward,
-                                     batch_next_obs, batch_done)
-
-        total_reward += reward
-        obs = next_obs
-        if done:
-            break
-    return total_reward
-
-
 if __name__ == '__main__':
 
     run = True
@@ -105,12 +77,6 @@ if __name__ == '__main__':
             win_num += 1
         if i > 100:
             pass
-            # TODO: save the trained network weights
-            ######################################
-            # torch.save(agent.Q_eval.state_dict(), 'weight_eval.pt')
-            # torch.save(agent.Q_next.state_dict(), 'weight_next.pt')
-            # agent.memory.save_buffer('buffer')
-            ######################################
         if run != True:
             break
         # scores.append(score)
