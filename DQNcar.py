@@ -58,11 +58,15 @@ if __name__ == '__main__':
     scores = []
     n_games = 10000
     run = True
+    win_num = 0
     for i in range(n_games):
         score = 0
         idx = 0
         done = False
         obs = env.reset()
+        if win_num >10:
+            print("game will finish here because the paras are best!")
+            break
         '''
         observation
         1. beta: sideslip angle (the angle between heading angle of the car and the center line)
@@ -96,8 +100,9 @@ if __name__ == '__main__':
             obs = next_obs
             idx += 1
             # print(observation)
-        print('episodes: ' + str(i) + '------score: ' + str(score))
-
+        print('episodes: ' + str(i) + '------score: ' + str(score)+'------win num: '+str(win_num))
+        if score > 100000:
+            win_num += 1
         if i > 100:
             pass
             # TODO: save the trained network weights
@@ -115,3 +120,4 @@ if __name__ == '__main__':
     save_path = './dqn_car_model.pth'
     algorithm.save(save_path)
     pygame.quit()
+
